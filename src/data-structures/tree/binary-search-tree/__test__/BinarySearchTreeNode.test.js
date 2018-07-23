@@ -185,6 +185,21 @@ describe('BinarySearchTreeNode', () => {
     expect(bstRootNode.toString()).toBe('30');
   });
 
+  it('should remove node with no parent', () => {
+    const bstRootNode = new BinarySearchTreeNode();
+    expect(bstRootNode.toString()).toBe('');
+
+    bstRootNode.insert(1);
+    bstRootNode.insert(2);
+    expect(bstRootNode.toString()).toBe('1,2');
+
+    bstRootNode.remove(1);
+    expect(bstRootNode.toString()).toBe('2');
+
+    bstRootNode.remove(2);
+    expect(bstRootNode.toString()).toBe('');
+  });
+
   it('should throw error when trying to remove not existing node', () => {
     const bstRootNode = new BinarySearchTreeNode();
 
@@ -227,5 +242,14 @@ describe('BinarySearchTreeNode', () => {
     expect(bstNode.contains(obj3)).toBeTruthy();
 
     expect(bstNode.findMin().value).toEqual(obj1);
+  });
+
+  it('should abandon removed node', () => {
+    const rootNode = new BinarySearchTreeNode('foo');
+    rootNode.insert('bar');
+    const childNode = rootNode.find('bar');
+    rootNode.remove('bar');
+
+    expect(childNode.parent).toBeNull();
   });
 });
